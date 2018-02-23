@@ -42,7 +42,7 @@ class App extends React.Component {
     })
   }
 
-  getRestaurantName() = (restaurantName) => {}
+  // getRestaurantName() = (restaurantName) => {}
 
   render() {
     const { classes } = this.props;

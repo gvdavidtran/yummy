@@ -16,10 +16,10 @@ const styles = {
 
 class RestaurantCard extends React.Component {
 
-  someFn = () => {
-    const selectedRestaurant;
-    this.props.getRestaurantName(selectedRestaurant);
-  },
+  // someFn = () => {
+  //   const selectedRestaurant;
+  //   this.props.getRestaurantName(selectedRestaurant);
+  // },
 
   render(){
     const { details, classes } = this.props;
