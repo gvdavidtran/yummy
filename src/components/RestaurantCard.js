@@ -15,17 +15,21 @@ const styles = {
 }
 
 class RestaurantCard extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  // someFn = () => {
-  //   const selectedRestaurant;
-  //   this.props.getRestaurantName(selectedRestaurant);
-  // },
+  handleClick() {
+    const newRestaurant = this.props.details.name;
+    this.props.getRestaurantName(newRestaurant);
+  }
 
   render(){
     const { details, classes } = this.props;
 
     return (
-      <Button onClick={this.props.loadMenu}>
+      <Button onClick={() => this.handleClick()} >
         <Card>
           <CardMedia
             className={classes.media}

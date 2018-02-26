@@ -8,6 +8,11 @@ import restoData from '../restaurants-menus/restaurants-list';
 import MenuItem from './MenuItem';
 import List from 'material-ui/List';
 import regineMenu from '../restaurants-menus/regine-menu';
+import santaBarbaraMenu from '../restaurants-menus/santabarbara-menu';
+import Drawer from 'material-ui/Drawer';
+import { ListItem, ListItemText } from 'material-ui/List';
+// import ResponsiveDrawer from "./ResponsiveDrawer";
+
 
 
 const styles = theme => ({
@@ -22,34 +27,80 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  drawerPaper: {
+    width: '250px',
+  }
 });
 
 class App extends React.Component {
   constructor(){
     super();
     this.loadMenu = this.loadMenu.bind(this);
+    this.getRestaurantName = this.getRestaurantName.bind(this)
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this)
     this.state = {
       restaurants: restoData,
       selectedRestaurant: {},
       menu: {},
+      open: false,
     };
   }
 
-  loadMenu() {
-    this.setState({
-      selectedRestaurant: {},
-      menu: regineMenu,
-    })
+  handleDrawerToggle() {
+    this.setState({ open: !this.state.open });
   }
 
-  // getRestaurantName() = (restaurantName) => {}
+  loadMenu() {
+    let selectedMenu = this.state.menu
+    switch(this.state.selectedRestaurant){
+      case "Regine Cafe":
+        selectedMenu = regineMenu;
+        break;
+      case "Santa Barbara":
+        selectedMenu = santaBarbaraMenu
+        break;
+      default:
+        selectedMenu = ""
+    }
+    this.setState({ menu: selectedMenu })
+  }
+
+  getRestaurantName(restaurantName) {
+    let selectedRestaurant = this.state.selectedRestaurant;
+    console.log('Previous selectedRestaurant: ' + selectedRestaurant)
+    selectedRestaurant = restaurantName;
+    console.log('New selectedRestaurant: ' + selectedRestaurant)
+    this.setState({ selectedRestaurant }, () => this.loadMenu())
+  }
 
   render() {
+    const drawerList = (
+      <List>
+        <ListItem>
+          <ListItemText 
+            primary= "One" />
+        </ListItem>
+        <ListItem>
+          <ListItemText 
+            primary= "Two" />
+        </ListItem>
+        <ListItem>
+          <ListItemText 
+            primary= "Three" />
+        </ListItem>
+      </List>
+    )
+
     const { classes } = this.props;
     return (
       <div>
-        <AppFrame></AppFrame>
+        <AppFrame handleDrawerToggle={this.handleDrawerToggle} />
         <Hero />
+        <Drawer variant="temporary" open={this.state.open} onClose={this.handleDrawerToggle} classes={{paper: classes.drawerPaper}} >
+          <div>
+            {drawerList}
+          </div>
+        </Drawer>
         <div className={classes.main}>
           <div className={classes.restaurantsGrid}>
             {Object
